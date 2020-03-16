@@ -20,56 +20,17 @@ const embedLayout = (data) => {
 }
 
 const returnMessage = (members, msg, leftOutMembers) => {
-    let GROUP1
-    let GROUP2
-    let GROUP3
-    let GROUP4
+    let left = leftOutMembers.length > 0 ? leftOutMembers.toString() : ".."
+    let group = []
+    let teamNumber = 0
 
-    let LEFTOUTGROUP = leftOutMembers.length > 0 ? leftOutMembers.toString() : ".."
-
-    switch(members.length){
-        case 3:
-            GROUP1 = members.toString()
-            msg.channel.send({ embed: embedLayout([
-                { name: "TEAM 1", value: GROUP1 },
-                { name: "TE STO A DI DE NO", value: LEFTOUTGROUP}
-            ]) })
-            break
-        case 6: 
-            GROUP1 = members.slice(0, 3).toString()
-            GROUP2 = members.slice(3, 6).toString()
-            msg.channel.send({ embed: embedLayout([
-                { name: "TEAM 1", value: GROUP1 }, 
-                { name: "TEAM 2", value: GROUP2 },
-                { name: "TE STO A DI DE NO", value: LEFTOUTGROUP}
-            ]) });
-            break
-        case 9:
-            GROUP1 = members.slice(0, 3).toString()
-            GROUP2 = members.slice(3, 6).toString()
-            GROUP3 = members.slice(6, 9).toString()
-            msg.channel.send({ embed: loadGraphicLayout([
-                { name: "TEAM 1", value: GROUP1 }, 
-                { name: "TEAM 2", value: GROUP2 }, 
-                { name: "TEAM 3", value: GROUP3 },
-                { name: "TE STO A DI DE NO", value: LEFTOUTGROUP}
-            ]) });
-            break
-        case 12:
-            GROUP1 = members.slice(0, 3).toString()
-            GROUP2 = members.slice(3, 6).toString()
-            GROUP3 = members.slice(6, 9).toString()
-            GROUP4 = members.slice(9, 12).toString()
-            msg.channel.send({ embed: loadGraphicLayout([
-                { name: "TEAM 1", value: GROUP1 }, 
-                { name: "TEAM 2", value: GROUP2 }, 
-                { name: "TEAM 3", value: GROUP3 }, 
-                { name: "TEAM 4", value: GROUP4 },
-                { name: "TE STO A DI DE NO", value: LEFTOUTGROUP}
-            ]) });
-            break
-        default: null
+    while(members.length){
+        teamNumber++
+        let users = members.splice(0, 3)
+        group.push({name: `TEAM ${teamNumber}`, value: users.toString()})
     }
+    group.push({name: 'TE STO A DI DE NO', value: left})
+    msg.channel.send({ embed: embedLayout(group) })
 }
 
 const shuffle = (a) => {
